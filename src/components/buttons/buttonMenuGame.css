@@ -1,0 +1,19 @@
+.game-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin:var(--margin-xl);
+  width: 230px;
+  height: 100px;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+
+}
+
+.game-btn:hover {
+    background: linear-gradient(135deg, #66baea 0%, #4b5fa2 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(122, 122, 122, 0.2);
+
+}

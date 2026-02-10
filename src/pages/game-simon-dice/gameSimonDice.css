@@ -1,0 +1,217 @@
+* {
+  font-family: var(--font-primary);
+}
+
+.simon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-md);
+  min-height: 80svh;
+}
+
+.simon-container h2 {
+  font-size: 2.5rem;
+  margin-bottom: var(--margin-lg);
+  color: var(--color-bg-secondary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: 30px;
+}
+
+.info-nivel {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2c3e50;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mensaje-start {
+  font-size: 1.2rem;
+  color: var(--color-bg-primary);
+  font-weight: 500;
+  text-align: center;
+  min-height: 30px;
+  transition: color 0.3s ease;
+}
+
+.tablero-simon {
+  display: grid;
+  grid-template-columns: repeat(2, 150px);
+  grid-template-rows: repeat(2, 150px);
+  gap: var(--spacing-sm);
+  margin-bottom: 30px;
+  padding: var(--padding-lg);
+  background: #ecf0f1;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.simon-button {
+  width: 150px;
+  height: 150px;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.simon-button:hover {
+  transform: scale(1.05);
+}
+
+.simon-button:active {
+  transform: scale(0.95);
+}
+
+.simon-button.rojo {
+  background: #c0392b;
+}
+
+.simon-button.verde {
+  background: #27ae60;
+}
+
+.simon-button.azul {
+  background: #2980b9;
+}
+
+.simon-button.amarillo {
+  background: #f39c12;
+}
+
+.simon-button.rojo.activo {
+  background: #e74c3c;
+  box-shadow:
+    0 0 30px #e74c3c,
+    0 0 50px #e74c3c;
+}
+
+.simon-button.verde.activo {
+  background: #2ecc71;
+  box-shadow:
+    0 0 30px #2ecc71,
+    0 0 50px #2ecc71;
+}
+
+.simon-button.azul.activo {
+  background: #3498db;
+  box-shadow:
+    0 0 30px #3498db,
+    0 0 50px #3498db;
+}
+
+.simon-button.amarillo.activo {
+  background: #f1c40f;
+  box-shadow:
+    0 0 30px #f1c40f,
+    0 0 50px #f1c40f;
+}
+
+.simon-button.error {
+  animation: errorShake 0.5s ease-in-out;
+  background: #7f8c8d !important;
+}
+
+@keyframes errorShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+.menu-controles {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.button-volver,
+.button-iniciar {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-volver {
+  background: rgb(48, 48, 48);
+  color: white;
+}
+
+.button-iniciar {
+  background: rgb(48, 48, 48);
+  color: white;
+}
+
+.button-iniciar:hover:not(:disabled) {
+  background: linear-gradient(135deg, #66eac9 0%, #57a24b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-volver:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ea7e66 0%, #a24b4b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-iniciar:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button-control:not(.button-iniciar) {
+  background: #34495e;
+  color: white;
+}
+
+.button-control:not(.button-iniciar):hover {
+  background: #2c3e50;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .tablero-simon {
+    grid-template-columns: repeat(2, 120px);
+    grid-template-rows: repeat(2, 120px);
+    gap: 10px;
+  }
+
+  .simon-button {
+    width: 120px;
+    height: 120px;
+  }
+
+  .simon-container h2 {
+    font-size: 2rem;
+  }
+
+  .info-nivel {
+    font-size: 1.5rem;
+  }
+}
