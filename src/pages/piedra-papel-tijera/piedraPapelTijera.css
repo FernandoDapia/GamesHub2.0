@@ -33,11 +33,9 @@
   background: rgba(58, 58, 58, 0.697);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-card);
-  
 }
 
 .marcador-item {
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,7 +58,6 @@
 }
 
 .marcador-puntos {
-  
   font-size: var(--font-size-xl);
   color: white;
   font-weight: var(--font-weight-bold);
@@ -99,7 +96,7 @@
 }
 
 .mensaje-resultado.derrota {
-  color: #e74c3c;
+  color: #e51d06;
   text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
 }
 
@@ -259,7 +256,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-
 .button-volver {
   background: rgb(48, 48, 48);
   color: white;
@@ -289,28 +285,31 @@
 }
 
 @media (max-width: 768px) {
-
   .ppt-container h2 {
     text-align: center;
     font-size: 2rem;
   }
-  .marcador, .info-panel-ppt {
+  .marcador,
+  .info-panel-ppt {
     display: flex;
     justify-content: center;
     width: 250px;
     gap: var(--spacing-xs);
   }
-  .marcador-item.maquina, .marcador-item.jugador {
-    width:40px
+  .marcador-item.maquina,
+  .marcador-item.jugador {
+    width: 40px;
   }
 
   .area-juego {
-    width: 230px ;
+    width: 230px;
     height: 100px;
     gap: var(--spacing-sm);
   }
 
-  .eleccion-display, .eleccion-display.maquina-eleccion, .eleccion-display.jugador-eleccion {
+  .eleccion-display,
+  .eleccion-display.maquina-eleccion,
+  .eleccion-display.jugador-eleccion {
     width: 80px;
     height: 80px;
     font-size: 3rem;
@@ -328,5 +327,4 @@
   .boton-icono {
     font-size: 2.5rem;
   }
-
 }

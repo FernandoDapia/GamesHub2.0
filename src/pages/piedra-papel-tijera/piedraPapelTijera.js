@@ -42,11 +42,17 @@ export const initPiedraPapelTijera = (divApp) => {
   const areaJuego = document.createElement("div");
   areaJuego.className = "area-juego";
 
-  const { zona: zonaJugador, display: eleccionJugadorDisplay } = crearZona("zona-jugador", "Tu elección");
+  const { zona: zonaJugador, display: eleccionJugadorDisplay } = crearZona(
+    "zona-jugador",
+    "Tu elección",
+  );
   const zonaVs = document.createElement("div");
   zonaVs.className = "zona-vs";
   zonaVs.textContent = "VS";
-  const { zona: zonaMaquina, display: eleccionMaquinaDisplay } = crearZona("zona-maquina", "Máquina");
+  const { zona: zonaMaquina, display: eleccionMaquinaDisplay } = crearZona(
+    "zona-maquina",
+    "Máquina",
+  );
 
   areaJuego.append(zonaJugador, zonaVs, zonaMaquina);
 
@@ -81,12 +87,12 @@ export const initPiedraPapelTijera = (divApp) => {
 
   menuControles.append(buttonIniciar, buttonVolver);
 
-  let puntosJugador = 0;
-  let puntosMaquina = 0;
-  let partidaNumero = 0;
-  let juegoActivo = false;
+  let puntosJugador = parseInt(localStorage.getItem("pptPuntosJugador")) || 0;
+  let puntosMaquina = parseInt(localStorage.getItem("pptPuntosMaquina")) || 0;
+  let partidaNumero = parseInt(localStorage.getItem("pptPartidaNumero")) || 0;
+  let juegoActivo = localStorage.getItem("pptJuegoActivo") === "true";
   let esperandoInput = false;
-  let jugadorInicia = true;
+  let jugadorInicia = localStorage.getItem("pptJugadorInicia") !== "false";
   let eleccionMaquinaOculta = null;
 
   const actualizarMarcador = () => {
@@ -94,7 +100,10 @@ export const initPiedraPapelTijera = (divApp) => {
       puntosJugador;
     marcadorMaquina.querySelector(".marcador-puntos").textContent =
       puntosMaquina;
+    localStorage.setItem("pptPuntosJugador", puntosJugador);
+    localStorage.setItem("pptPuntosMaquina", puntosMaquina);
   };
+  actualizarMarcador();
 
   const resetearDisplay = () => {
     eleccionJugadorDisplay.textContent = "?";
@@ -118,6 +127,9 @@ export const initPiedraPapelTijera = (divApp) => {
     partidaNumero = 0;
     juegoActivo = true;
     jugadorInicia = true;
+    localStorage.setItem("pptPartidaNumero", 0);
+    localStorage.setItem("pptJuegoActivo", true);
+    localStorage.setItem("pptJugadorInicia", true);
     actualizarMarcador();
     resetearDisplay();
     buttonIniciar.disabled = true;
@@ -190,6 +202,9 @@ export const initPiedraPapelTijera = (divApp) => {
     turnoInfo.textContent = `Ronda ${partidaNumero} finalizada`;
 
     jugadorInicia = !jugadorInicia;
+    localStorage.setItem("pptPartidaNumero", partidaNumero);
+    localStorage.setItem("pptJuegoActivo", juegoActivo);
+    localStorage.setItem("pptJugadorInicia", jugadorInicia);
 
     setTimeout(() => {
       iniciarRonda();
@@ -205,8 +220,18 @@ export const initPiedraPapelTijera = (divApp) => {
 
   buttonIniciar.addEventListener("click", iniciarJuego);
   buttonVolver.addEventListener("click", () => {
+    localStorage.removeItem("pptPuntosJugador");
+    localStorage.removeItem("pptPuntosMaquina");
+    localStorage.removeItem("pptPartidaNumero");
+    localStorage.removeItem("pptJuegoActivo");
+    localStorage.removeItem("pptJugadorInicia");
     window.location.hash = "/";
   });
+
+  if (juegoActivo) {
+    buttonIniciar.disabled = true;
+    iniciarRonda();
+  }
 
   pptContainer.append(
     tituloGame,
