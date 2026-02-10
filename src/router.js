@@ -1,11 +1,14 @@
 import { initGameSimonDice } from "./pages/game-simon-dice/gameSimonDice.js";
 import { pantallaInicio } from "./pages/pantalla-inicio/pantallaInicio.js";
 import { initPiedraPapelTijera } from "./pages/piedra-papel-tijera/piedraPapelTijera.js";
+import { initTresEnRaya } from "./pages/tres-en-raya/tresEnRaya.js";
 
 const routes = {
   "/": pantallaInicio,
   "/GameSimonDice": initGameSimonDice,
-  "/piedra-papel-tijera": initPiedraPapelTijera
+  "/piedra-papel-tijera": initPiedraPapelTijera,
+  "/tres-en-raya": initTresEnRaya
+  
 };
 
 export const router = () => {

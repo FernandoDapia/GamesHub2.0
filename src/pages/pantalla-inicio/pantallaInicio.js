@@ -12,7 +12,7 @@ export const pantallaInicio = () => {
 
   const divBotonesJuegos = document.createElement("div");
   divBotonesJuegos.className = "botones-juegos";
-  const tresBtn = createGameButton("TRES EN RAYA");
+  const tresBtn = createGameButton("TRES EN RAYA", "/tres-en-raya");
   const btnSimonDice = createGameButton("Simon Dice Game", "/GameSimonDice");
   const btnPPT = createGameButton("Piedra Papel Tijera", "/piedra-papel-tijera");
 
