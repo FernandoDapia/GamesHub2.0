@@ -25,7 +25,7 @@ export const comprobarGanador = (tablero) => {
   for (const [a, b, c] of COMBINACIONES_GANADORAS) {
     if (tablero[a] && tablero[a] === tablero[b] && tablero[a] === tablero[c]) {
       return {
-        resulado:
+        resultado:
           tablero[a] === JUGADORES.X ? RESULTADOS.GANA_X : RESULTADOS.GANA_O,
         linea: [a, b, c],
       };

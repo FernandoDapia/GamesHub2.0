@@ -1,3 +1,5 @@
+import "./tresEnRaya.css";
+
 import {
   JUGADORES,
   RESULTADOS,
@@ -16,7 +18,7 @@ export const initTresEnRaya = (divApp) => {
   infoPanel.className = "info-panel-ter";
 
   const marcador = document.createElement("div");
-  marcador.className = "marcador";
+  marcador.className = "marcador-ter";
 
   const marcadorX = document.createElement("div");
   marcadorX.className = "marcador-item jugador-x";
@@ -55,11 +57,11 @@ export const initTresEnRaya = (divApp) => {
 
   const buttonIniciar = document.createElement("button");
   buttonIniciar.textContent = "Iniciar";
-  buttonIniciar.className = "button-iniciar";
+  buttonIniciar.className = "button-iniciar-ter";
 
   const buttonVolver = document.createElement("button");
   buttonVolver.textContent = "Volver al Menu";
-  buttonVolver.className = "button-volver";
+  buttonVolver.className = "button-volver-ter";
 
   menuControles.append(buttonIniciar, buttonVolver);
 
@@ -117,16 +119,17 @@ export const initTresEnRaya = (divApp) => {
     } else if (resultado === RESULTADOS.EMPATE) {
       turnoInfo.textContent = "!Empate¡";
     }
+    actualizarMarcador();
+    juegoActivo = false;
+
+    setTimeout(() => {
+      resetearTablero();
+      juegoActivo = true;
+      turnoInfo.textContent = "Tu turno — Coloca tu X";
+    }, 2000);
   };
 
   actualizarMarcador();
-  juegoActivo = false;
-
-  setTimeout(() => {
-    resetearTablero();
-    juegoActivo = true;
-    turnoInfo.textContent = "Tu Turno - Coloca tu X";
-  }, 2000);
 
   const turnoMaquina = () => {
     turnoInfo.textContent = "La máquina esta pensando...";
@@ -144,6 +147,11 @@ export const initTresEnRaya = (divApp) => {
       turnoInfo.textContent = "Tu turno — Coloca tu X";
     }, 600);
   };
+
+  buttonIniciar.addEventListener("click", iniciarJuego);
+  buttonVolver.addEventListener("click", () => {
+    window.location.hash = "/";
+  });
 
   tableroElement.addEventListener("click", (e) => {
     const casilla = e.target.closest(".casilla");
@@ -166,10 +174,9 @@ export const initTresEnRaya = (divApp) => {
     turnoMaquina();
   });
 
-terContainer.append(tituloGame, infoPanel, tableroElement,menuControles)
-divApp.innerHTML = ""
-divApp.appendChild(terContainer)
-
+  terContainer.append(tituloGame, infoPanel, tableroElement, menuControles);
+  divApp.innerHTML = "";
+  divApp.appendChild(terContainer);
 };
 
-export default initTresEnRaya
+export default initTresEnRaya;
