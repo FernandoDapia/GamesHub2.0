@@ -73,4 +73,103 @@ export const initTresEnRaya = (divApp) => {
     marcadorX.querySelector(".marcador-puntos").textContent = victoriasX;
     marcadorO.querySelector(".marcador-puntos").textContent = victoriasO;
   };
+
+  const renderizarTablero = () => {
+    casillas.forEach((casilla, index) => {
+      casilla.textContent = tablero[index] || "";
+      casilla.className = "casilla";
+      if (tablero[index] === JUGADORES.X) casilla.classList.add("marca-x");
+      if (tablero[index] === JUGADORES.O) casilla.classList.add("marca-o");
+    });
+  };
+
+  const resetearTablero = () => {
+    tablero = Array(9).fill(null);
+    turnoActual = JUGADORES.X;
+    renderizarTablero();
+  };
+
+  const iniciarJuego = () => {
+    victoriasX = 0;
+    victoriasO = 0;
+    juegoActivo = true;
+    actualizarMarcador();
+    resetearTablero();
+    buttonIniciar.disabled = true;
+    turnoInfo.textContent = "Tu turno — Coloca tu X";
+  };
+
+  const resaltarGanador = (linea) => {
+    linea.forEach((index) => {
+      casillas[index].classList.add("ganadora");
+    });
+  };
+
+  const procesarResultado = (resultado, linea) => {
+    if (resultado === RESULTADOS.GANA_X) {
+      victoriasX++;
+      turnoInfo.textContent = "¡Ganaste esta ronda!";
+      resaltarGanador(linea);
+    } else if (resultado === RESULTADOS.GANA_O) {
+      victoriasO++;
+      turnoInfo.textContent = "¡La máquina gana esta ronda!";
+      resaltarGanador(linea);
+    } else if (resultado === RESULTADOS.EMPATE) {
+      turnoInfo.textContent = "!Empate¡";
+    }
+  };
+
+  actualizarMarcador();
+  juegoActivo = false;
+
+  setTimeout(() => {
+    resetearTablero();
+    juegoActivo = true;
+    turnoInfo.textContent = "Tu Turno - Coloca tu X";
+  }, 2000);
+
+  const turnoMaquina = () => {
+    turnoInfo.textContent = "La máquina esta pensando...";
+    setTimeout(() => {
+      const indexMaquina = jugadaMaquina(tablero);
+      tablero[indexMaquina] = JUGADORES.O;
+      renderizarTablero();
+      const { resultado, linea } = comprobarGanador(tablero);
+      if (resultado !== RESULTADOS.CONTINUA) {
+        procesarResultado(resultado, linea);
+        return;
+      }
+
+      turnoActual = JUGADORES.X;
+      turnoInfo.textContent = "Tu turno — Coloca tu X";
+    }, 600);
+  };
+
+  tableroElement.addEventListener("click", (e) => {
+    const casilla = e.target.closest(".casilla");
+    if (!casilla || !juegoActivo) return;
+
+    const index = parseInt(casilla.dataset.index);
+
+    if (tablero[index] !== null || turnoActual !== JUGADORES.X) return;
+
+    tablero[index] = JUGADORES.X;
+    renderizarTablero();
+
+    const { resultado, linea } = comprobarGanador(tablero);
+    if (resultado !== RESULTADOS.CONTINUA) {
+      procesarResultado(resultado, linea);
+      return;
+    }
+
+    turnoActual = JUGADORES.O;
+    turnoMaquina();
+  });
+
+terContainer.append(tituloGame, infoPanel, tableroElement,menuControles)
+divApp.innerHTML = ""
+divApp.appendChild(terContainer)
+
 };
+
+export default initTresEnRaya
