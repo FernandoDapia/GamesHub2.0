@@ -47,11 +47,11 @@ export const initGameSimonDice = (divApp) => {
 
   menuControles.append(buttonIniciar, buttonVolver);
 
-  let secuenciaJuego = [];
+  let secuenciaJuego = JSON.parse(localStorage.getItem("simonSecuenciaJuego")) || [];
   let secuenciaJugador = [];
-  let nivel = 0;
+  let nivel = parseInt(localStorage.getItem("simonNivel")) || 0;
   let esperandoInput = false;
-  let juegoActivo = false;
+  let juegoActivo = localStorage.getItem("simonJuegoActivo") === "true";
 
   const iniciarJuego = () => {
     secuenciaJuego = [];
@@ -75,6 +75,9 @@ export const initGameSimonDice = (divApp) => {
     esperandoInput = false;
     const colorAleatorio = Math.floor(Math.random() * 4);
     secuenciaJuego.push(colorAleatorio);
+    localStorage.setItem("simonNivel", nivel);
+    localStorage.setItem("simonSecuenciaJuego", JSON.stringify(secuenciaJuego));
+    localStorage.setItem("simonJuegoActivo", "true");
     mensajeStart.textContent = "!Observa!";
     setTimeout(() => {
       mostrarSecuencia();
@@ -132,6 +135,9 @@ export const initGameSimonDice = (divApp) => {
   const gameOver = () => {
     juegoActivo = false;
     esperandoInput = false;
+    localStorage.removeItem("simonNivel");
+    localStorage.removeItem("simonSecuenciaJuego");
+    localStorage.removeItem("simonJuegoActivo");
     mensajeStart.textContent = `¡Game Over! Alcanzaste el nivel ${nivel}`;
     mensajeStart.style.color = "#ff4444";
     buttonsGame.forEach((boton) => {
@@ -150,12 +156,24 @@ export const initGameSimonDice = (divApp) => {
   buttonIniciar.addEventListener("click", iniciarJuego);
   tableroSimon.addEventListener("click", procesarClick);
   buttonVolver.addEventListener("click", () => {
+    localStorage.removeItem("simonNivel");
+    localStorage.removeItem("simonSecuenciaJuego");
+    localStorage.removeItem("simonJuegoActivo");
     window.location.hash = "/";
   });
 
   simonContainer.append(tituloGame, infoPanel, tableroSimon, menuControles);
   divApp.innerHTML = "";
   divApp.appendChild(simonContainer);
+
+  if (juegoActivo && secuenciaJuego.length > 0) {
+    infoNivel.textContent = `Nivel: ${nivel}`;
+    mensajeStart.textContent = "¡Observa la secuencia!";
+    buttonIniciar.disabled = true;
+    setTimeout(() => {
+      mostrarSecuencia();
+    }, 1000);
+  }
 };
 
 export default initGameSimonDice;

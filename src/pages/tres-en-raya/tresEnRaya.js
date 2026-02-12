@@ -65,15 +65,23 @@ export const initTresEnRaya = (divApp) => {
 
   menuControles.append(buttonIniciar, buttonVolver);
 
-  let tablero = Array(9).fill(null);
-  let turnoActual = JUGADORES.X;
-  let juegoActivo = false;
-  let victoriasX = 0;
-  let victoriasO = 0;
+  let tablero = JSON.parse(localStorage.getItem("terTablero")) || Array(9).fill(null);
+  let turnoActual = localStorage.getItem("terTurnoActual") || JUGADORES.X;
+  let juegoActivo = localStorage.getItem("terJuegoActivo") === "true";
+  let victoriasX = parseInt(localStorage.getItem("terVictoriasX")) || 0;
+  let victoriasO = parseInt(localStorage.getItem("terVictoriasO")) || 0;
 
   const actualizarMarcador = () => {
     marcadorX.querySelector(".marcador-puntos").textContent = victoriasX;
     marcadorO.querySelector(".marcador-puntos").textContent = victoriasO;
+    localStorage.setItem("terVictoriasX", victoriasX);
+    localStorage.setItem("terVictoriasO", victoriasO);
+  };
+
+  const guardarEstadoTablero = () => {
+    localStorage.setItem("terTablero", JSON.stringify(tablero));
+    localStorage.setItem("terTurnoActual", turnoActual);
+    localStorage.setItem("terJuegoActivo", juegoActivo);
   };
 
   const renderizarTablero = () => {
@@ -121,10 +129,12 @@ export const initTresEnRaya = (divApp) => {
     }
     actualizarMarcador();
     juegoActivo = false;
+    guardarEstadoTablero();
 
     setTimeout(() => {
       resetearTablero();
       juegoActivo = true;
+      guardarEstadoTablero();
       turnoInfo.textContent = "Tu turno — Coloca tu X";
     }, 2000);
   };
@@ -137,6 +147,7 @@ export const initTresEnRaya = (divApp) => {
       const indexMaquina = jugadaMaquina(tablero);
       tablero[indexMaquina] = JUGADORES.O;
       renderizarTablero();
+      guardarEstadoTablero();
       const { resultado, linea } = comprobarGanador(tablero);
       if (resultado !== RESULTADOS.CONTINUA) {
         procesarResultado(resultado, linea);
@@ -144,12 +155,18 @@ export const initTresEnRaya = (divApp) => {
       }
 
       turnoActual = JUGADORES.X;
+      guardarEstadoTablero();
       turnoInfo.textContent = "Tu turno — Coloca tu X";
     }, 600);
   };
 
   buttonIniciar.addEventListener("click", iniciarJuego);
   buttonVolver.addEventListener("click", () => {
+    localStorage.removeItem("terTablero");
+    localStorage.removeItem("terTurnoActual");
+    localStorage.removeItem("terJuegoActivo");
+    localStorage.removeItem("terVictoriasX");
+    localStorage.removeItem("terVictoriasO");
     window.location.hash = "/";
   });
 
@@ -163,6 +180,7 @@ export const initTresEnRaya = (divApp) => {
 
     tablero[index] = JUGADORES.X;
     renderizarTablero();
+    guardarEstadoTablero();
 
     const { resultado, linea } = comprobarGanador(tablero);
     if (resultado !== RESULTADOS.CONTINUA) {
@@ -177,6 +195,17 @@ export const initTresEnRaya = (divApp) => {
   terContainer.append(tituloGame, infoPanel, tableroElement, menuControles);
   divApp.innerHTML = "";
   divApp.appendChild(terContainer);
+
+  if (juegoActivo) {
+    buttonIniciar.disabled = true;
+    actualizarMarcador();
+    renderizarTablero();
+    if (turnoActual === JUGADORES.X) {
+      turnoInfo.textContent = "Tu turno — Coloca tu X";
+    } else {
+      turnoMaquina();
+    }
+  }
 };
 
 export default initTresEnRaya;
