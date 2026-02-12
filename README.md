@@ -2,6 +2,8 @@
 
 Plataforma web de minijuegos clásicos construida con JavaScript vanilla y Vite. Incluye tres juegos con persistencia de datos mediante localStorage.
 
+[Ver demo en vivo](https://games-hub2-0.vercel.app/)
+
 ## Tecnologías
 
 - JavaScript (ES Modules)
