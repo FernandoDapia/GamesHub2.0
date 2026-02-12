@@ -125,7 +125,7 @@ export const initTresEnRaya = (divApp) => {
       turnoInfo.textContent = "¡La máquina gana esta ronda!";
       resaltarGanador(linea);
     } else if (resultado === RESULTADOS.EMPATE) {
-      turnoInfo.textContent = "!Empate¡";
+      turnoInfo.textContent = "¡Empate!";
     }
     actualizarMarcador();
     juegoActivo = false;

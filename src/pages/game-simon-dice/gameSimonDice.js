@@ -39,11 +39,11 @@ export const initGameSimonDice = (divApp) => {
 
   const buttonIniciar = document.createElement("button");
   buttonIniciar.textContent = "Iniciar";
-  buttonIniciar.className = "button-iniciar .button-control";
+  buttonIniciar.className = "button-iniciar button-control";
 
   const buttonVolver = document.createElement("button");
   buttonVolver.textContent = "Volver al Menu";
-  buttonVolver.className = "button-volver .button-control";
+  buttonVolver.className = "button-volver button-control";
 
   menuControles.append(buttonIniciar, buttonVolver);
 

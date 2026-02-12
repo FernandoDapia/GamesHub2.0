@@ -11,7 +11,7 @@
   overflow-y: hidden;
   background-color: rgb(35, 34, 34);
   overflow: auto;
-  gap: var(--spacing-mg);
+  gap: var(--spacing-md);
 }
 
 .divTitulo {
@@ -45,6 +45,25 @@
     0 0 30px rgba(255, 107, 107, 0.5);
   transform: perspective(350px) rotateX(15deg);
   animation: arcadeGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes arcadeGlow {
+  from {
+    text-shadow:
+      3px 3px 0px #ff6b6b,
+      6px 6px 0px #4834d4,
+      9px 9px 0px #ff9ff3,
+      12px 12px 0px #54a0ff,
+      0 0 30px rgba(255, 107, 107, 0.5);
+  }
+  to {
+    text-shadow:
+      3px 3px 0px #54a0ff,
+      6px 6px 0px #ff9ff3,
+      9px 9px 0px #4834d4,
+      12px 12px 0px #ff6b6b,
+      0 0 30px rgba(84, 160, 255, 0.5);
+  }
 }
 
 .botones-juegos {
