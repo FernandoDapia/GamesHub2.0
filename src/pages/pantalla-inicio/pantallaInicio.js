@@ -19,7 +19,7 @@ export const pantallaInicio = () => {
   const footer = document.createElement("footer");
   footer.className = "menu-footer";
   const footerText = document.createElement("p");
-  footerText.textContent = "Proyecto de Fernando Dapia ";
+  footerText.textContent = "Proyecto de Fernando Dapia Rodriguez";
   footer.appendChild(footerText);
 
   divBotonesJuegos.append(tresBtn, btnSimonDice, btnPPT);
