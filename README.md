@@ -13,7 +13,7 @@ Plataforma web de minijuegos clásicos construida con JavaScript vanilla y Vite.
 
 ```bash
 # Clonar el repositorio
-git clone <url-del-repositorio>
+git clone <https://github.com/FernandoDapia/GamesHub2.0.git>
 
 # Entrar al directorio del proyecto
 cd GameHub2.0
