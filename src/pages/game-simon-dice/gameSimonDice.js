@@ -14,11 +14,14 @@ export const initGameSimonDice = (divApp) => {
   infoNivel.className = "info-nivel";
   infoNivel.textContent = "Nivel: 0";
 
+  const infoMejorNivel = document.createElement("div");
+  infoMejorNivel.className = "info-mejor-nivel";
+
   const mensajeStart = document.createElement("div");
   mensajeStart.className = "mensaje-start";
   mensajeStart.textContent = "Presiona INICIAR para comenzar";
 
-  infoPanel.append(infoNivel, mensajeStart);
+  infoPanel.append(infoNivel, infoMejorNivel, mensajeStart);
 
   const tableroSimon = document.createElement("div");
   tableroSimon.className = "tablero-simon";
@@ -50,8 +53,14 @@ export const initGameSimonDice = (divApp) => {
   let secuenciaJuego = JSON.parse(localStorage.getItem("simonSecuenciaJuego")) || [];
   let secuenciaJugador = [];
   let nivel = parseInt(localStorage.getItem("simonNivel")) || 0;
+  let mejorNivel = parseInt(localStorage.getItem("simonMejorNivel")) || 0;
   let esperandoInput = false;
   let juegoActivo = localStorage.getItem("simonJuegoActivo") === "true";
+
+  const actualizarMejorNivel = () => {
+    infoMejorNivel.textContent = `Mejor nivel: ${mejorNivel}`;
+  };
+  actualizarMejorNivel();
 
   const iniciarJuego = () => {
     secuenciaJuego = [];
@@ -135,6 +144,11 @@ export const initGameSimonDice = (divApp) => {
   const gameOver = () => {
     juegoActivo = false;
     esperandoInput = false;
+    if (nivel > mejorNivel) {
+      mejorNivel = nivel;
+      localStorage.setItem("simonMejorNivel", mejorNivel);
+      actualizarMejorNivel();
+    }
     localStorage.removeItem("simonNivel");
     localStorage.removeItem("simonSecuenciaJuego");
     localStorage.removeItem("simonJuegoActivo");

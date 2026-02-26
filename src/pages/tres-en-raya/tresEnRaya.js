@@ -100,8 +100,6 @@ export const initTresEnRaya = (divApp) => {
   };
 
   const iniciarJuego = () => {
-    victoriasX = 0;
-    victoriasO = 0;
     juegoActivo = true;
     actualizarMarcador();
     resetearTablero();
@@ -165,8 +163,6 @@ export const initTresEnRaya = (divApp) => {
     localStorage.removeItem("terTablero");
     localStorage.removeItem("terTurnoActual");
     localStorage.removeItem("terJuegoActivo");
-    localStorage.removeItem("terVictoriasX");
-    localStorage.removeItem("terVictoriasO");
     window.location.hash = "/";
   });
 

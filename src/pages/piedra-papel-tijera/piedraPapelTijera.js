@@ -122,8 +122,6 @@ export const initPiedraPapelTijera = (divApp) => {
   };
 
   const iniciarJuego = () => {
-    puntosJugador = 0;
-    puntosMaquina = 0;
     partidaNumero = 0;
     juegoActivo = true;
     jugadorInicia = true;
@@ -220,8 +218,6 @@ export const initPiedraPapelTijera = (divApp) => {
 
   buttonIniciar.addEventListener("click", iniciarJuego);
   buttonVolver.addEventListener("click", () => {
-    localStorage.removeItem("pptPuntosJugador");
-    localStorage.removeItem("pptPuntosMaquina");
     localStorage.removeItem("pptPartidaNumero");
     localStorage.removeItem("pptJuegoActivo");
     localStorage.removeItem("pptJugadorInicia");
