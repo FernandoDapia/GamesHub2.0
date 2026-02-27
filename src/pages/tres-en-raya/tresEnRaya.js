@@ -59,17 +59,23 @@ export const initTresEnRaya = (divApp) => {
   buttonIniciar.textContent = "Iniciar";
   buttonIniciar.className = "button-iniciar-ter";
 
+  const buttonReiniciarMarcador = document.createElement("button");
+  buttonReiniciarMarcador.textContent = "Reiniciar";
+  buttonReiniciarMarcador.className = "button-reiniciar-ter";
+
   const buttonVolver = document.createElement("button");
   buttonVolver.textContent = "Volver al Menu";
   buttonVolver.className = "button-volver-ter";
 
-  menuControles.append(buttonIniciar, buttonVolver);
+  menuControles.append(buttonIniciar, buttonReiniciarMarcador, buttonVolver);
 
-  let tablero = JSON.parse(localStorage.getItem("terTablero")) || Array(9).fill(null);
+  let tablero =
+    JSON.parse(localStorage.getItem("terTablero")) || Array(9).fill(null);
   let turnoActual = localStorage.getItem("terTurnoActual") || JUGADORES.X;
   let juegoActivo = localStorage.getItem("terJuegoActivo") === "true";
   let victoriasX = parseInt(localStorage.getItem("terVictoriasX")) || 0;
   let victoriasO = parseInt(localStorage.getItem("terVictoriasO")) || 0;
+  let generacion = 0;
 
   const actualizarMarcador = () => {
     marcadorX.querySelector(".marcador-puntos").textContent = victoriasX;
@@ -129,7 +135,9 @@ export const initTresEnRaya = (divApp) => {
     juegoActivo = false;
     guardarEstadoTablero();
 
+    const genActual = generacion;
     setTimeout(() => {
+      if (generacion !== genActual) return;
       resetearTablero();
       juegoActivo = true;
       guardarEstadoTablero();
@@ -141,7 +149,9 @@ export const initTresEnRaya = (divApp) => {
 
   const turnoMaquina = () => {
     turnoInfo.textContent = "La máquina esta pensando...";
+    const genActual = generacion;
     setTimeout(() => {
+      if (generacion !== genActual) return;
       const indexMaquina = jugadaMaquina(tablero);
       tablero[indexMaquina] = JUGADORES.O;
       renderizarTablero();
@@ -159,10 +169,18 @@ export const initTresEnRaya = (divApp) => {
   };
 
   buttonIniciar.addEventListener("click", iniciarJuego);
+  buttonReiniciarMarcador.addEventListener("click", () => {
+    generacion++;
+    victoriasX = 0;
+    victoriasO = 0;
+    juegoActivo = false;
+    resetearTablero();
+    actualizarMarcador();
+    guardarEstadoTablero();
+    buttonIniciar.disabled = false;
+    turnoInfo.textContent = "Presiona INICIAR para comenzar";
+  });
   buttonVolver.addEventListener("click", () => {
-    localStorage.removeItem("terTablero");
-    localStorage.removeItem("terTurnoActual");
-    localStorage.removeItem("terJuegoActivo");
     window.location.hash = "/";
   });
 

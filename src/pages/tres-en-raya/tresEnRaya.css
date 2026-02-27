@@ -87,7 +87,8 @@
 }
 
 .button-volver-ter,
-.button-iniciar-ter {
+.button-iniciar-ter,
+.button-reiniciar-ter {
   padding: 12px 30px;
   font-size: 1.1rem;
   border: none;
@@ -96,7 +97,7 @@
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: rgb(48, 48, 48);
+  background: rgb(48, 48, 48);
   color: white;
 }
 .button-iniciar-ter:hover:not(:disabled) {
@@ -106,6 +107,11 @@
 }
 
 .button-volver-ter:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ea7e66 0%, #a24b4b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.button-reiniciar-ter:hover {
   background: linear-gradient(135deg, #ea7e66 0%, #a24b4b 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -123,7 +129,6 @@
     display: flex;
     text-align: center;
     padding: var(--padding-sm);
-  
   }
 
   .marcador-ter {

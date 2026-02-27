@@ -241,11 +241,14 @@
 
 .menu-controles {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-sm);
 }
 
 .button-volver,
-.button-iniciar {
+.button-iniciar,
+.button-reiniciar-ppt {
   padding: 12px 30px;
   font-size: 1.1rem;
   border: none;
@@ -264,6 +267,7 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+.button-reiniciar-ppt:hover:not(:disabled),
 .button-volver:hover:not(:disabled) {
   background: linear-gradient(135deg, #ea7e66 0%, #a24b4b 100%);
   transform: translateY(-2px);
@@ -277,7 +281,6 @@
 }
 
 @media (max-width: 768px) {
-
   .ppt-container h2 {
     text-align: center;
     font-size: 2rem;

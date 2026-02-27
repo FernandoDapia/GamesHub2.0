@@ -44,13 +44,18 @@ export const initGameSimonDice = (divApp) => {
   buttonIniciar.textContent = "Iniciar";
   buttonIniciar.className = "button-iniciar button-control";
 
+  const buttonReiniciarMarcador = document.createElement("button");
+  buttonReiniciarMarcador.textContent = "Reiniciar";
+  buttonReiniciarMarcador.className = "button-reiniciar-simon";
+
   const buttonVolver = document.createElement("button");
   buttonVolver.textContent = "Volver al Menu";
   buttonVolver.className = "button-volver button-control";
 
-  menuControles.append(buttonIniciar, buttonVolver);
+  menuControles.append(buttonIniciar, buttonReiniciarMarcador, buttonVolver);
 
-  let secuenciaJuego = JSON.parse(localStorage.getItem("simonSecuenciaJuego")) || [];
+  let secuenciaJuego =
+    JSON.parse(localStorage.getItem("simonSecuenciaJuego")) || [];
   let secuenciaJugador = [];
   let nivel = parseInt(localStorage.getItem("simonNivel")) || 0;
   let mejorNivel = parseInt(localStorage.getItem("simonMejorNivel")) || 0;
@@ -107,7 +112,6 @@ export const initGameSimonDice = (divApp) => {
       mensajeStart.textContent = "¡Tu turno! Repite la secuencia";
     }, delay);
   };
-  
 
   const iluminarBoton = (index) => {
     const boton = buttonsGame[index];
@@ -168,11 +172,26 @@ export const initGameSimonDice = (divApp) => {
   };
 
   buttonIniciar.addEventListener("click", iniciarJuego);
-  tableroSimon.addEventListener("click", procesarClick);
-  buttonVolver.addEventListener("click", () => {
+  buttonReiniciarMarcador.addEventListener("click", () => {
+    nivel = 0;
+    mejorNivel = 0;
+    juegoActivo = false;
+    esperandoInput = false;
+    mensajeStart.textContent = "Presiona INICIAR para comenzar";
+    infoNivel.textContent = "Nivel: 0";
+    buttonIniciar.disabled = false;
     localStorage.removeItem("simonNivel");
     localStorage.removeItem("simonSecuenciaJuego");
     localStorage.removeItem("simonJuegoActivo");
+    localStorage.removeItem("simonMejorNivel");
+    actualizarMejorNivel();
+  });
+  tableroSimon.addEventListener("click", procesarClick);
+  buttonVolver.addEventListener("click", () => {
+    if (nivel > mejorNivel) {
+      mejorNivel = nivel;
+      localStorage.setItem("simonMejorNivel", mejorNivel);
+    }
     window.location.hash = "/";
   });
 

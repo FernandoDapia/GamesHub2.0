@@ -81,11 +81,15 @@ export const initPiedraPapelTijera = (divApp) => {
   buttonIniciar.textContent = "Iniciar";
   buttonIniciar.className = "button-iniciar";
 
+  const buttonReiniciarMarcador = document.createElement("button");
+  buttonReiniciarMarcador.textContent = "Reiniciar";
+  buttonReiniciarMarcador.className = "button-reiniciar-ppt";
+
   const buttonVolver = document.createElement("button");
   buttonVolver.textContent = "Volver al Menu";
   buttonVolver.className = "button-volver";
 
-  menuControles.append(buttonIniciar, buttonVolver);
+  menuControles.append(buttonIniciar, buttonReiniciarMarcador, buttonVolver);
 
   let puntosJugador = parseInt(localStorage.getItem("pptPuntosJugador")) || 0;
   let puntosMaquina = parseInt(localStorage.getItem("pptPuntosMaquina")) || 0;
@@ -135,6 +139,7 @@ export const initPiedraPapelTijera = (divApp) => {
   };
 
   const iniciarRonda = () => {
+    if (!juegoActivo) return;
     partidaNumero++;
     resetearDisplay();
     esperandoInput = true;
@@ -217,10 +222,22 @@ export const initPiedraPapelTijera = (divApp) => {
   });
 
   buttonIniciar.addEventListener("click", iniciarJuego);
-  buttonVolver.addEventListener("click", () => {
+  buttonReiniciarMarcador.addEventListener("click", () => {
+    puntosJugador = 0;
+    puntosMaquina = 0;
+    partidaNumero = 0;
+    juegoActivo = false;
+    esperandoInput = false;
+    actualizarMarcador();
+    resetearDisplay();
+    habilitarBotones(false);
+    buttonIniciar.disabled = false;
+    turnoInfo.textContent = "Presiona INICIAR para comenzar";
     localStorage.removeItem("pptPartidaNumero");
     localStorage.removeItem("pptJuegoActivo");
     localStorage.removeItem("pptJugadorInicia");
+  });
+  buttonVolver.addEventListener("click", () => {
     window.location.hash = "/";
   });
 
